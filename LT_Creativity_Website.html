@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LT Creativity | Content & Media Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f0f5fb;
+      --card: #ffffff;
+      --border: rgba(15,82,168,0.15);
+      --purple: #0f52a8;
+      --violet: #0a3d80;
+      --pink: #257dc2;
+      --cyan: #257dc2;
+      --white: #1a1a2e;
+      --muted: #4a5568;
+      --grad: linear-gradient(135deg, #0f52a8, #257dc2);
+      --grad2: linear-gradient(135deg, #0a3d80, #257dc2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 5%;
+      height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.3s, backdrop-filter 0.3s, border-bottom 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(15,82,168,0.08);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .nav-logo img { display: none; }
+    .nav-logo span { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+    nav.scrolled .nav-logo span { color: #1a1a2e; -webkit-text-fill-color: #1a1a2e; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-cta {
+      background: var(--grad);
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #1a1a2e; border-radius: 2px; transition: 0.3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: 70px; left: 0; right: 0;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+      padding: 2rem 5%; flex-direction: column; gap: 1.5rem;
+      border-bottom: 1px solid var(--border); z-index: 999;
+      box-shadow: 0 8px 20px rgba(15,82,168,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: #1a1a2e; text-decoration: none; font-size: 1.1rem; font-weight: 500; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+      padding: 100px 5% 60px;
+      background: #060e1d;
+    }
+    #heroCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;
+    }
+    .hero-vignette {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, rgba(6,14,29,0.6) 100%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+    .hero-logo { margin-bottom: 1.5rem; }
+    .hero-logo img { height: 110px; width: auto; object-fit: contain; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(37,125,194,0.12); border: 1px solid rgba(37,125,194,0.35);
+      padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500; color: #7db8e8; margin-bottom: 2rem;
+    }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.5); } 50% { box-shadow: 0 0 0 6px rgba(74,222,128,0); } }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; color: #ffffff; }
+    .grad-text { background: linear-gradient(135deg, #4a9fd4, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.6); max-width: 650px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .btn-primary {
+      background: var(--grad); color: #fff; padding: 0.85rem 2rem;
+      border-radius: 50px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 25px rgba(15,82,168,0.5);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(15,82,168,0.65); }
+    .btn-outline {
+      background: rgba(255,255,255,0.06); color: #fff; padding: 0.85rem 2rem;
+      border-radius: 50px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, background 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); }
+    .hero-stats { display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #4a9fd4, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-stat .label { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.2rem; }
+    .scroll-line { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--grad); animation: scanline 3s linear infinite; z-index: 3; }
+    @keyframes scanline { 0% { transform: scaleX(0) translateX(-100%); } 100% { transform: scaleX(1) translateX(0); } }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--purple); margin-bottom: 1rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 600px; }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .about-left { }
+    .about-right { position: relative; }
+    .about-card {
+      background: #f0f5fb; border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--grad);
+    }
+    .about-card h3 { font-size: 1.3rem; margin-bottom: 1.2rem; }
+    .tool-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .tool-tag {
+      background: rgba(15,82,168,0.08); border: 1px solid rgba(15,82,168,0.2);
+      color: #0f52a8; padding: 0.35rem 0.85rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 500;
+    }
+    .satisfaction-badge {
+      position: absolute; bottom: -20px; right: 20px;
+      background: var(--grad); border-radius: 16px; padding: 1rem 1.4rem;
+      text-align: center; box-shadow: 0 10px 30px rgba(15,82,168,0.35);
+    }
+    .satisfaction-badge .big { font-size: 1.8rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+    .satisfaction-badge .small { font-size: 0.7rem; opacity: 0.9; }
+    .about-point { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 1rem; }
+    .check { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: rgba(15,82,168,0.1); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--purple); margin-top: 2px; }
+    .about-point p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+    /* ── SERVICES (Vertical Scroll Experience) ── */
+    #services.svc-scroll-section { padding: 100px 5%; background: linear-gradient(160deg,#060e1d 0%,#0c1a3a 55%,#060e1d 100%); position: relative; overflow: hidden; }
+    .svc-scroll-section::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(37,125,194,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,125,194,0.06) 1px,transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
+    .svc-scroll-section::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80vw; height: 80vh; background: radial-gradient(ellipse,rgba(15,82,168,0.14) 0%,transparent 70%); pointer-events: none; z-index: 0; }
+    .svc-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
+    .svc-header { text-align: center; margin-bottom: 5rem; }
+    .svc-header .section-label { color: #4a9fd4; }
+    .svc-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem,3.5vw,2.8rem); color: #fff; margin-top: 0.5rem; }
+    .svc-header p { color: rgba(255,255,255,0.45); font-size: 1rem; margin-top: 0.75rem; }
+    .svc-slide { display: flex; align-items: center; gap: 6%; padding: 5rem 0; border-top: 1px solid rgba(37,125,194,0.12); }
+    .svc-slide:first-child { border-top: none; padding-top: 0; }
+    .svc-info { flex: 0 0 42%; border-radius: 24px; padding: 2.8rem; position: relative; z-index: 5; opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+    .svc-slide.revealed .svc-info { opacity: 1; transform: translateY(0); }
+    .svc-info--left { order: 1; } .svc-info--right { order: 2; }
+    .glass-dark { background: rgba(6,18,50,0.82); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); border: 1px solid rgba(37,125,194,0.28); box-shadow: 0 32px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.09), inset 0 -1px 0 rgba(37,125,194,0.12); }
+    .glass-light { background: rgba(255,255,255,0.07); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 32px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18); }
+    .svc-num { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; color: #4a9fd4; margin-bottom: 0.8rem; text-transform: uppercase; }
+    .svc-info h3 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.3rem,2.4vw,2rem); color: #fff; margin-bottom: 1rem; line-height: 1.2; }
+    .svc-info p { color: rgba(255,255,255,0.62); font-size: 0.96rem; line-height: 1.8; margin-bottom: 1.5rem; }
+    .svc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .svc-tags .stag { font-size: 0.72rem; color: #4a9fd4; background: rgba(37,125,194,0.15); border: 1px solid rgba(37,125,194,0.32); padding: 0.3rem 0.85rem; border-radius: 50px; }
+    .svc-visual { flex: 0 0 50%; display: flex; align-items: center; justify-content: center; position: relative; min-height: 420px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s 0.2s cubic-bezier(0.4,0,0.2,1), transform 0.8s 0.2s cubic-bezier(0.4,0,0.2,1); }
+    .svc-slide.revealed .svc-visual { opacity: 1; transform: translateY(0); }
+    .svc-visual--left { order: 1; } .svc-visual--right { order: 2; }
+
+    /* ─── Floating tags ─── */
+    .vis-float-tag { position: absolute; background: rgba(8,25,75,0.92); backdrop-filter: blur(12px); border: 1px solid rgba(37,125,194,0.55); color: #fff; font-size: 0.68rem; font-weight: 600; padding: 0.32rem 0.9rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(15,82,168,0.45); animation: tagFloat 3s ease-in-out infinite; animation-delay: var(--delay,0s); white-space: nowrap; z-index: 20; }
+    .vis-ft-1 { bottom: 16%; left: 0%; } .vis-ft-2 { top: 12%; right: 0%; } .vis-ft-3 { bottom: 4%; right: 6%; }
+    @keyframes tagFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+
+    /* ─── 1. Short-Form Video ─── */
+    .vis-video-player { position: relative; display: flex; align-items: center; justify-content: center; }
+    .vis-phone-frame { width: 200px; height: 358px; background: linear-gradient(145deg,#1a2a4a,#0d1a32); border-radius: 32px; padding: 10px; border: 1px solid rgba(37,125,194,0.4); box-shadow: 0 0 0 1px rgba(255,255,255,0.05),0 40px 70px rgba(0,0,0,0.75),0 0 50px rgba(15,82,168,0.3); transform: perspective(900px) rotateY(-16deg) rotateX(4deg); }
+    .vis-video-screen { background: #080d1a; border-radius: 22px; height: 100%; overflow: hidden; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .vis-video-bars { display: flex; gap: 5px; align-items: flex-end; height: 95px; padding: 0 14px; width: 100%; }
+    .vis-vbar { flex: 1; height: var(--h); background: linear-gradient(180deg,#4a9fd4,#0f52a8); border-radius: 3px 3px 0 0; }
+    .vis-vbar:nth-child(1){animation:barPulse 2s 0s ease-in-out infinite alternate} .vis-vbar:nth-child(2){animation:barPulse 2s 0.15s ease-in-out infinite alternate} .vis-vbar:nth-child(3){animation:barPulse 2s 0.3s ease-in-out infinite alternate} .vis-vbar:nth-child(4){animation:barPulse 2s 0.45s ease-in-out infinite alternate} .vis-vbar:nth-child(5){animation:barPulse 2s 0.6s ease-in-out infinite alternate}
+    @keyframes barPulse { from{opacity:0.45;transform:scaleY(0.65)} to{opacity:1;transform:scaleY(1)} }
+    .vis-play-btn { font-size: 1.8rem; color: rgba(255,255,255,0.92); margin: 7px 0; }
+    .vis-progress-bar { width: 78%; height: 3px; background: rgba(255,255,255,0.13); border-radius: 3px; margin: 6px 0; overflow: hidden; }
+    .vis-progress-fill { width: 0; height: 100%; background: linear-gradient(90deg,#0f52a8,#4a9fd4); border-radius: 3px; animation: progressAnim 4s linear infinite; }
+    @keyframes progressAnim { 0%{width:0%} 100%{width:100%} }
+    .vis-tiktok-icons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 9px; font-size: 0.72rem; text-align: center; color: rgba(255,255,255,0.85); }
+    .vis-tik-icon span { display: block; font-size: 0.52rem; color: rgba(255,255,255,0.55); }
+
+    /* ─── 2. Camera ─── */
+    .vis-camera-wrap { position: relative; width: 320px; height: 260px; display: flex; align-items: center; justify-content: center; }
+    .vis-camera { display: flex; align-items: center; animation: cameraSway 5s ease-in-out infinite; }
+    @keyframes cameraSway { 0%,100%{transform:perspective(700px) rotateY(14deg) rotateX(-5deg)} 50%{transform:perspective(700px) rotateY(20deg) rotateX(-8deg)} }
+    .vis-cam-body { width: 195px; height: 130px; background: linear-gradient(145deg,#1e3a6e,#0d2048); border-radius: 16px; border: 1px solid rgba(37,125,194,0.4); box-shadow: 0 24px 48px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; position: relative; }
+    .vis-cam-lens-outer { width: 82px; height: 82px; border-radius: 50%; background: radial-gradient(circle at 35% 35%,#1a3060,#060e1d); border: 3px solid rgba(37,125,194,0.65); box-shadow: 0 0 28px rgba(15,82,168,0.55),inset 0 0 20px rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; }
+    .vis-cam-lens-mid { width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 35% 35%,#253a6a,#060e1d); border: 2px solid rgba(37,125,194,0.32); display: flex; align-items: center; justify-content: center; }
+    .vis-cam-lens-inner { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle at 30% 30%,#4a9fd4,#0a1a3a); border: 1px solid rgba(37,125,194,0.55); box-shadow: 0 0 16px rgba(37,125,194,0.65); }
+    .vis-cam-viewfinder { position: absolute; top: 12px; right: 16px; width: 28px; height: 18px; background: rgba(37,125,194,0.2); border: 1px solid rgba(37,125,194,0.4); border-radius: 3px; }
+    .vis-cam-flash { position: absolute; top: 14px; left: 14px; width: 16px; height: 10px; background: rgba(255,255,255,0.14); border-radius: 2px; border: 1px solid rgba(255,255,255,0.2); }
+    .vis-cam-grip { width: 36px; height: 90px; background: linear-gradient(145deg,#1a3060,#0d1a40); border-radius: 0 12px 12px 0; border: 1px solid rgba(37,125,194,0.3); border-left: none; box-shadow: inset -4px 0 10px rgba(0,0,0,0.45); }
+
+    /* ─── 3. Instagram Phone (3D rocking) ─── */
+    .vis-phone-wrap { position: relative; perspective: 1200px; display: flex; align-items: center; justify-content: center; }
+    .vis-phone-3d { width: 200px; height: 410px; transform-style: preserve-3d; animation: phoneRock 5s ease-in-out infinite; position: relative; }
+    @keyframes phoneRock { 0%,100%{transform:rotateY(-22deg) rotateX(3deg)} 50%{transform:rotateY(18deg) rotateX(-2deg)} }
+    .vis-phone-front, .vis-phone-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 34px; }
+    .vis-phone-back { transform: rotateY(180deg); background: linear-gradient(145deg,#1e2a4a,#0d1830); border: 1px solid rgba(37,125,194,0.32); display: flex; align-items: flex-start; justify-content: center; padding-top: 36px; }
+    .vis-phone-camera-bump { width: 66px; height: 66px; background: rgba(37,125,194,0.1); border-radius: 16px; border: 1px solid rgba(37,125,194,0.32); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
+    .vis-pb-lens { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 35%,#253a6a,#060e1d); border: 1px solid rgba(37,125,194,0.55); }
+    .vis-pb-lens:last-child { grid-column: 1/-1; justify-self: center; }
+    .vis-iphone { width: 100%; height: 100%; background: linear-gradient(145deg,#1a2a4a,#0d1830); border-radius: 34px; padding: 10px 8px 6px; border: 1px solid rgba(37,125,194,0.42); box-shadow: 0 40px 70px rgba(0,0,0,0.85),0 0 55px rgba(15,82,168,0.45); display: flex; flex-direction: column; }
+    .vis-phone-notch { width: 72px; height: 14px; background: #0d1830; border-radius: 0 0 12px 12px; margin: 0 auto 3px; flex-shrink: 0; }
+    .vis-phone-home-bar { width: 60px; height: 5px; background: rgba(255,255,255,0.28); border-radius: 4px; margin: 5px auto 0; flex-shrink: 0; }
+    .vis-ig-screen { background: #fafafa; border-radius: 22px; flex: 1; overflow: hidden; font-size: 0.62rem; color: #262626; }
+    .vis-ig-header { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px 5px; background: #fff; border-bottom: 0.5px solid #efefef; }
+    .vis-ig-logo { font-family: 'Space Grotesk',sans-serif; font-size: 0.82rem; font-weight: 700; background: linear-gradient(45deg,#405de6,#e1306c,#fd1d1d,#fcb045); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .vis-ig-header-icons { font-size: 0.68rem; letter-spacing: 2px; color: #262626; }
+    .vis-ig-stories { display: flex; gap: 6px; padding: 6px 8px; background: #fff; border-bottom: 0.5px solid #efefef; overflow: hidden; }
+    .vis-ig-story-item { text-align: center; flex-shrink: 0; }
+    .vis-ig-story-ring { width: 34px; height: 34px; border-radius: 50%; padding: 2px; background: linear-gradient(45deg,#fcb045,#fd1d1d,#e1306c,#405de6); margin: 0 auto 2px; }
+    .vis-ig-story-avatar { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #fafafa; display: flex; align-items: center; justify-content: center; font-size: 0.48rem; color: white; font-weight: 700; }
+    .vis-ig-story-item>span { font-size: 0.42rem; color: #262626; display: block; }
+    .vis-ig-post { padding: 0 6px; background: #fff; }
+    .vis-ig-post-header { display: flex; align-items: center; gap: 5px; padding: 5px 0; }
+    .vis-ig-post-avatar { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg,#0f52a8,#257dc2); display: flex; align-items: center; justify-content: center; font-size: 0.44rem; color: white; font-weight: 700; flex-shrink: 0; }
+    .vis-ig-post-name { font-size: 0.6rem; font-weight: 700; color: #262626; line-height: 1.2; }
+    .vis-ig-post-loc { font-size: 0.44rem; color: #8e8e8e; }
+    .vis-ig-post-more { margin-left: auto; color: #262626; font-size: 0.8rem; line-height: 0.6; }
+    .vis-ig-post-img { width: 100%; height: 108px; background: linear-gradient(135deg,#0f52a8 0%,#0a3d80 50%,#257dc2 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .vis-ig-post-img img { width: 72%; height: 90%; object-fit: contain; }
+    .vis-ig-post-overlay { position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.55); border-radius: 3px; padding: 1px 5px; color: white; font-size: 0.46rem; }
+    .vis-ig-post-actions { display: flex; gap: 8px; padding: 4px 0; font-size: 0.82rem; background: #fff; }
+    .vis-ig-post-likes { font-size: 0.56rem; font-weight: 700; color: #262626; padding-bottom: 4px; background: #fff; }
+
+    /* ─── 4. Dashboard ─── */
+    .vis-dashboard { position: relative; width: 380px; }
+    .vis-dash-card { padding: 1.8rem; border-radius: 22px; animation: dashTilt 6s ease-in-out infinite; }
+    @keyframes dashTilt { 0%,100%{transform:perspective(900px) rotateY(-10deg) rotateX(5deg)} 50%{transform:perspective(900px) rotateY(-16deg) rotateX(8deg)} }
+    .vis-dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+    .vis-dash-title { color: #fff; font-size: 0.88rem; font-weight: 600; font-family: 'Space Grotesk',sans-serif; }
+    .vis-dash-period { color: rgba(255,255,255,0.38); font-size: 0.68rem; }
+    .vis-dash-stats { display: flex; gap: 0.9rem; margin-bottom: 1.2rem; }
+    .vis-dash-stat { flex: 1; }
+    .vis-ds-num { display: block; color: #fff; font-size: 1rem; font-weight: 700; font-family: 'Space Grotesk',sans-serif; }
+    .vis-ds-label { display: block; color: rgba(255,255,255,0.38); font-size: 0.58rem; margin: 3px 0; }
+    .vis-ds-change { font-size: 0.64rem; font-weight: 600; }
+    .vis-ds-change.up { color: #4ade80; }
+    .vis-chart-bars { display: flex; gap: 9px; align-items: flex-end; height: 85px; padding-bottom: 18px; }
+    .vis-cb { flex: 1; height: var(--h); background: linear-gradient(180deg,#4a9fd4,rgba(15,82,168,0.45)); border-radius: 5px 5px 0 0; position: relative; }
+    .vis-cb-label { position: absolute; bottom: -17px; left: 50%; transform: translateX(-50%); font-size: 0.52rem; color: rgba(255,255,255,0.38); white-space: nowrap; }
+
+    /* ─── 5. After Effects ─── */
+    .vis-ae-wrap { width: 400px; position: relative; }
+    .vis-ae-panel { border-radius: 16px; overflow: hidden; animation: aePerspective 6s ease-in-out infinite; }
+    @keyframes aePerspective { 0%,100%{transform:perspective(900px) rotateY(12deg) rotateX(-4deg)} 50%{transform:perspective(900px) rotateY(7deg) rotateX(-8deg)} }
+    .vis-ae-header { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(0,0,0,0.45); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vis-ae-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .vis-ae-title { color: rgba(255,255,255,0.42); font-size: 0.6rem; margin-left: 4px; font-family: monospace; }
+    .vis-ae-canvas { height: 145px; background: #080d1a; position: relative; overflow: hidden; }
+    .vis-ae-shape { position: absolute; border-radius: 50%; }
+    .vis-aes-1 { width: 52px; height: 52px; background: rgba(15,82,168,0.62); border: 1px solid rgba(37,125,194,0.85); top: 25px; left: 34px; box-shadow: 0 0 28px rgba(37,125,194,0.55); animation: aeFloat1 2.5s ease-in-out infinite; }
+    .vis-aes-2 { width: 32px; height: 32px; background: rgba(37,125,194,0.42); border: 1px solid rgba(74,159,212,0.65); top: 52px; left: 148px; box-shadow: 0 0 20px rgba(74,159,212,0.45); border-radius: 6px; animation: aeFloat2 3.5s 0.5s ease-in-out infinite; }
+    .vis-aes-3 { width: 22px; height: 22px; background: rgba(74,159,212,0.72); top: 72px; left: 248px; box-shadow: 0 0 16px rgba(74,159,212,0.72); animation: aeFloat1 2s 1s ease-in-out infinite; }
+    @keyframes aeFloat1 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-14px) rotate(180deg)} }
+    @keyframes aeFloat2 { 0%,100%{transform:translateY(0) rotate(45deg)} 50%{transform:translateY(-11px) rotate(225deg)} }
+    .vis-ae-timeline { padding: 11px 14px; background: rgba(0,0,0,0.52); display: flex; flex-direction: column; gap: 7px; }
+    .vis-ae-track { display: flex; align-items: center; gap: 10px; }
+    .vis-ae-layer-name { color: rgba(255,255,255,0.48); font-size: 0.56rem; width: 74px; flex-shrink: 0; font-family: monospace; }
+    .vis-ae-track-bar { flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 3px; position: relative; overflow: hidden; }
+    .vis-ae-track-bar::after { content: ''; position: absolute; left: var(--start); width: var(--width); top: 0; bottom: 0; background: linear-gradient(90deg,rgba(15,82,168,0.88),rgba(37,125,194,0.62)); border-radius: 3px; }
+
+    /* ─── 6. Strategy ─── */
+    .vis-strategy-wrap { position: relative; width: 370px; height: 330px; }
+    .vis-strategy-grid { width: 100%; height: 100%; border-radius: 22px; border: 1px solid rgba(37,125,194,0.27); position: relative; overflow: hidden; box-shadow: 0 28px 60px rgba(0,0,0,0.55); background: rgba(6,18,50,0.92); background-image: linear-gradient(rgba(37,125,194,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(37,125,194,0.07) 1px,transparent 1px); background-size: 30px 30px; }
+    .vis-strategy-rocket { position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%); font-size: 3.2rem; animation: rocketLaunch 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(37,125,194,0.85)); z-index: 5; }
+    @keyframes rocketLaunch { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-22px)} }
+    .vis-strategy-nodes { position: absolute; inset: 0; }
+    .vis-sn { position: absolute; left: var(--x); top: var(--y); background: rgba(12,40,120,0.82); backdrop-filter: blur(8px); border: 1px solid rgba(37,125,194,0.52); color: rgba(255,255,255,0.92); font-size: 0.6rem; font-weight: 600; padding: 4px 11px; border-radius: 50px; box-shadow: 0 4px 16px rgba(15,82,168,0.45); }
+    .vis-sn:nth-child(1){animation:nodeFloat 3.2s 0s ease-in-out infinite} .vis-sn:nth-child(2){animation:nodeFloat 3.2s 0.5s ease-in-out infinite} .vis-sn:nth-child(3){animation:nodeFloat 3.2s 1s ease-in-out infinite} .vis-sn:nth-child(4){animation:nodeFloat 3.2s 1.5s ease-in-out infinite} .vis-sn:nth-child(5){animation:nodeFloat 3.2s 2s ease-in-out infinite}
+    @keyframes nodeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .svc-slide { flex-direction: column; padding: 3.5rem 0; gap: 2.5rem; }
+      .svc-slide:first-child { padding-top: 0; }
+      .svc-info { flex: none; width: 100%; order: 2 !important; padding: 1.8rem; }
+      .svc-visual { flex: none; width: 100%; min-height: 300px; order: 1 !important; }
+      .vis-dashboard { width: 100%; max-width: 380px; }
+      .vis-ae-wrap { width: 100%; max-width: 400px; }
+      .vis-strategy-wrap { width: 100%; max-width: 370px; }
+    }
+    .stag { font-size: 0.72rem; color: #0f52a8; background: rgba(15,82,168,0.08); padding: 0.2rem 0.6rem; border-radius: 50px; }
+
+    /* ── USPs ── */
+    .usps { background: var(--bg2); }
+    .usp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .usp-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.8rem; display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .usp-card:hover { border-color: rgba(15,82,168,0.4); box-shadow: 0 8px 25px rgba(15,82,168,0.08); }
+    .usp-icon { font-size: 1.8rem; min-width: 40px; }
+    .usp-card h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .usp-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+    /* ── WHO WE WORK WITH ── */
+    .clients-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .client-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.8rem; text-align: center; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .client-card:hover { transform: translateY(-4px); border-color: rgba(15,82,168,0.4); box-shadow: 0 8px 25px rgba(15,82,168,0.08); }
+    .client-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .client-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .client-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: #060e1d; position: relative; overflow: hidden;
+    }
+    .stats-section::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(37,125,194,0.1) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(37,125,194,0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .stats-section .section-label { color: #4a9fd4; }
+    .stats-section .section-title { color: #ffffff; }
+    .stats-section .section-sub { color: rgba(255,255,255,0.5); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1100px; margin: 3rem auto 0; position: relative; z-index: 1; }
+    .stat-card { text-align: center; padding: 2rem 1rem; }
+    .stat-card .num { font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700; background: linear-gradient(135deg, #4a9fd4, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-card .label { color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-top: 0.5rem; }
+
+    /* ── GROWTH PATHS ── */
+    .growth-paths { background: var(--bg2); }
+    .growth-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+      max-width: 1100px; margin: 3.5rem auto 0;
+    }
+    .growth-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 2.8rem 2.5rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .growth-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,82,168,0.12); }
+    .growth-card.featured-growth { border-color: var(--purple); }
+    .growth-card.featured-growth::after {
+      content: 'Faster Results';
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: var(--grad); color: #fff;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+    }
+    .growth-illustration {
+      width: 100%; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(15,82,168,0.05), rgba(37,125,194,0.08));
+      border-radius: 16px; margin-bottom: 2rem;
+    }
+    .growth-card h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .growth-card .growth-sub {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--purple); margin-bottom: 1rem;
+    }
+    .growth-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 1.5rem; }
+    .growth-points { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .growth-points li {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      color: var(--muted); font-size: 0.9rem; line-height: 1.5;
+    }
+    .growth-points li .gp-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      background: var(--grad); margin-top: 0.45rem;
+    }
+    @media (max-width: 768px) {
+      .growth-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .testi-card {
+      background: #f0f5fb; border: 1px solid var(--border); border-radius: 20px;
+      padding: 2rem; position: relative;
+    }
+    .testi-card::before { content: '\201C'; font-size: 5rem; color: rgba(15,82,168,0.15); position: absolute; top: 0; left: 1.5rem; line-height: 1; font-family: Georgia, serif; }
+    .stars { color: #fbbf24; font-size: 1rem; margin-bottom: 1rem; }
+    .testi-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; font-family: 'Space Grotesk', sans-serif; flex-shrink: 0; }
+    .testi-author h4 { font-size: 0.95rem; }
+    .testi-author span { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; max-width: 1100px; margin: 3.5rem auto 0; align-items: start; }
+    .contact-info h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .contact-info p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem; }
+    .contact-item { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem; color: var(--muted); font-size: 0.9rem; }
+    .contact-item-icon { font-size: 1.2rem; min-width: 28px; }
+    .contact-socials { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .social-btn {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #f0f5fb; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+    }
+    .social-btn:hover { border-color: var(--purple); transform: translateY(-2px); }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    input, select, textarea {
+      background: #f0f5fb; border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.9rem 1.1rem; color: #1a1a2e; font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; transition: border-color 0.2s; outline: none; width: 100%;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(15,82,168,0.08); }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    select { appearance: none; cursor: pointer; }
+    textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      background: var(--grad); color: #fff; border: none; padding: 1rem 2rem;
+      border-radius: 50px; font-family: 'Space Grotesk', sans-serif; font-size: 1rem;
+      font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(15,82,168,0.35);
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(15,82,168,0.45); }
+    .form-success {
+      display: none; text-align: center; padding: 3rem 2rem;
+      background: #f0f5fb; border: 1px solid var(--border); border-radius: 20px;
+    }
+    .form-success .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .form-success h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .form-success p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #f0f5fb; border-top: 1px solid var(--border);
+      padding: 3rem 5%; text-align: center;
+    }
+    footer .logo { margin-bottom: 1rem; display: flex; justify-content: center; }
+    footer .logo img { height: 60px; width: auto; object-fit: contain; }
+    footer p { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 70px 5%; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">LT<span> Creativity</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#usps" onclick="toggleMenu()">Why Us</a>
+  <a href="#results" onclick="toggleMenu()">Results</a>
+  <a href="#contact" onclick="toggleMenu()">Get Started</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-logo">
+      <img src="./LT_Logo_v2.png" alt="LT Creativity" />
+    </div>
+    <div class="hero-badge">
+      <div class="pulse"></div>
+      Studio Open · Taking On New Clients
+    </div>
+    <h1>You run the business.<br /><span class="grad-text">We handle the content.</span></h1>
+    <p>LT Creativity blends scroll-stopping creative with performance-driven strategy. Short-form video, social media growth, paid ads. Built to convert, not just impress.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Start Your Project</a>
+      <a href="#services" class="btn-outline">View Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">500K+</div><div class="label">Views Generated</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="label">Clients Served</div></div>
+      <div class="hero-stat"><div class="num">3.2×</div><div class="label">Avg. ROAS</div></div>
+      <div class="hero-stat"><div class="num">48h</div><div class="label">Turnaround Time</div></div>
+    </div>
+  </div>
+  <div class="scroll-line"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-left fade-up">
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">Creative Content.<br />Real Conversions.</h2>
+      <div class="about-point">
+        <div class="check">✓</div>
+        <p>Every piece of content we produce is engineered to capture attention in the first 3 seconds and hold it, because that's where growth happens.</p>
+      </div>
+      <div class="about-point">
+        <div class="check">✓</div>
+        <p>We don't just make things look good. We combine creative storytelling with marketing psychology to drive genuine, measurable results.</p>
+      </div>
+      <div class="about-point">
+        <div class="check">✓</div>
+        <p>From short-form video on TikTok and Reels to Google and Meta ad campaigns, we cover every stage of your brand's digital growth.</p>
+      </div>
+      <div class="about-point">
+        <div class="check">✓</div>
+        <p>We work fast, think strategically, and treat every client's brand like our own, with full commitment to ROI and results you can actually see.</p>
+      </div>
+    </div>
+    <div class="about-right fade-up">
+      <div class="about-card">
+        <h3>Our Production Stack</h3>
+        <div class="tool-list">
+          <span class="tool-tag">After Effects</span>
+          <span class="tool-tag">Photoshop</span>
+          <span class="tool-tag">Premiere Pro</span>
+          <span class="tool-tag">Meta Ads Manager</span>
+          <span class="tool-tag">Google Ads</span>
+          <span class="tool-tag">TikTok Ads</span>
+          <span class="tool-tag">CapCut</span>
+          <span class="tool-tag">DaVinci Resolve</span>
+          <span class="tool-tag">Motion Graphics</span>
+          <span class="tool-tag">Analytics & Reporting</span>
+        </div>
+      </div>
+      <div class="satisfaction-badge">
+        <div class="big">98%</div>
+        <div class="small">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="svc-scroll-section">
+  <div class="svc-inner">
+
+    <!-- Header -->
+    <div class="svc-header">
+      <div class="section-label">What We Do</div>
+      <h2>Services Built for Growth</h2>
+      <p>Everything your brand needs to dominate social media, generate leads, and turn attention into revenue.</p>
+    </div>
+
+      <!-- 01: Short-Form Video -->
+      <div class="svc-slide">
+        <div class="svc-visual svc-visual--left">
+          <div class="vis-video-player">
+            <div class="vis-phone-frame">
+              <div class="vis-video-screen">
+                <div class="vis-video-bars">
+                  <div class="vis-vbar" style="--h:60%"></div>
+                  <div class="vis-vbar" style="--h:82%"></div>
+                  <div class="vis-vbar" style="--h:46%"></div>
+                  <div class="vis-vbar" style="--h:92%"></div>
+                  <div class="vis-vbar" style="--h:70%"></div>
+                </div>
+                <div class="vis-play-btn">▶</div>
+                <div class="vis-progress-bar"><div class="vis-progress-fill"></div></div>
+                <div class="vis-tiktok-icons">
+                  <div class="vis-tik-icon">♥<span>12k</span></div>
+                  <div class="vis-tik-icon">💬<span>843</span></div>
+                  <div class="vis-tik-icon">↗<span>2.1k</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">TikTok ✓</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.5s">12.4k views</div>
+            <div class="vis-float-tag vis-ft-3" style="--delay:1s">Reels ✓</div>
+          </div>
+        </div>
+        <div class="svc-info svc-info--right glass-dark">
+          <span class="svc-num">01</span>
+          <h3>Short-Form Video Editing</h3>
+          <p>Fast-paced, trend-aware edits built for TikTok, Instagram Reels, and YouTube Shorts. Engineered to hook, retain, and convert viewers into followers and customers.</p>
+          <div class="svc-tags">
+            <span class="stag">TikTok</span><span class="stag">Reels</span><span class="stag">Shorts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02: Content Creation -->
+      <div class="svc-slide">
+        <div class="svc-info svc-info--left glass-light">
+          <span class="svc-num">02</span>
+          <h3>Content Creation</h3>
+          <p>Full-service filming and editing for brands that want high-quality, original content. From concept to final cut, we handle it all with a creative-first approach.</p>
+          <div class="svc-tags">
+            <span class="stag">Filming</span><span class="stag">Editing</span><span class="stag">Concept</span>
+          </div>
+        </div>
+        <div class="svc-visual svc-visual--right">
+          <div class="vis-camera-wrap">
+            <div class="vis-camera">
+              <div class="vis-cam-body">
+                <div class="vis-cam-lens-outer">
+                  <div class="vis-cam-lens-mid">
+                    <div class="vis-cam-lens-inner"></div>
+                  </div>
+                </div>
+                <div class="vis-cam-viewfinder"></div>
+                <div class="vis-cam-flash"></div>
+              </div>
+              <div class="vis-cam-grip"></div>
+            </div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">4K Resolution</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.6s">RAW Format</div>
+            <div class="vis-float-tag vis-ft-3" style="--delay:1.1s">Colour Grade</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03: Social Media Management -->
+      <div class="svc-slide">
+        <div class="svc-visual svc-visual--left">
+          <div class="vis-phone-wrap">
+            <div class="vis-phone-3d">
+              <div class="vis-phone-front">
+                <div class="vis-iphone">
+                  <div class="vis-phone-notch"></div>
+                  <div class="vis-ig-screen">
+                    <div class="vis-ig-header">
+                      <span class="vis-ig-logo">Instagram</span>
+                      <div class="vis-ig-header-icons">♡ ✈</div>
+                    </div>
+                    <div class="vis-ig-stories">
+                      <div class="vis-ig-story-item">
+                        <div class="vis-ig-story-ring"><div class="vis-ig-story-avatar" style="background:linear-gradient(135deg,#0f52a8,#257dc2)">LT</div></div>
+                        <span>Your story</span>
+                      </div>
+                      <div class="vis-ig-story-item">
+                        <div class="vis-ig-story-ring"><div class="vis-ig-story-avatar" style="background:#1a3a6e">M</div></div>
+                        <span>mark_j</span>
+                      </div>
+                      <div class="vis-ig-story-item">
+                        <div class="vis-ig-story-ring"><div class="vis-ig-story-avatar" style="background:#0a2d5c">S</div></div>
+                        <span>sara.k</span>
+                      </div>
+                    </div>
+                    <div class="vis-ig-post">
+                      <div class="vis-ig-post-header">
+                        <div class="vis-ig-post-avatar">LT</div>
+                        <div>
+                          <div class="vis-ig-post-name">ltcreativity</div>
+                          <div class="vis-ig-post-loc">London, UK</div>
+                        </div>
+                        <div class="vis-ig-post-more">•••</div>
+                      </div>
+                      <div class="vis-ig-post-img">
+                        <img src="./LT_Logo.jpg" alt="LT Creativity" />
+                        <div class="vis-ig-post-overlay">▶ 24.1k</div>
+                      </div>
+                      <div class="vis-ig-post-actions">
+                        <span>♥</span><span>💬</span><span>↗</span>
+                      </div>
+                      <div class="vis-ig-post-likes">8,472 likes</div>
+                    </div>
+                  </div>
+                  <div class="vis-phone-home-bar"></div>
+                </div>
+              </div>
+              <div class="vis-phone-back">
+                <div class="vis-phone-camera-bump">
+                  <div class="vis-pb-lens"></div>
+                  <div class="vis-pb-lens"></div>
+                  <div class="vis-pb-lens"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vis-float-tag vis-ft-1" style="--delay:0s">+847 followers</div>
+          <div class="vis-float-tag vis-ft-2" style="--delay:0.55s">↑ 34% reach</div>
+        </div>
+        <div class="svc-info svc-info--right glass-dark">
+          <span class="svc-num">03</span>
+          <h3>Social Media Management</h3>
+          <p>Full account management: posting schedules, community engagement, growth optimisation, and data-backed strategy to grow your audience consistently.</p>
+          <div class="svc-tags">
+            <span class="stag">Instagram</span><span class="stag">TikTok</span><span class="stag">Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04: Paid Advertising -->
+      <div class="svc-slide">
+        <div class="svc-info svc-info--left glass-light">
+          <span class="svc-num">04</span>
+          <h3>Paid Advertising Campaigns</h3>
+          <p>Google Ads and Meta Ads campaigns built around lead generation, traffic, and ROI. We handle strategy, creative, targeting, optimisation, and reporting.</p>
+          <div class="svc-tags">
+            <span class="stag">Google Ads</span><span class="stag">Meta Ads</span><span class="stag">ROI</span>
+          </div>
+        </div>
+        <div class="svc-visual svc-visual--right">
+          <div class="vis-dashboard">
+            <div class="vis-dash-card glass-dark">
+              <div class="vis-dash-header">
+                <span class="vis-dash-title">Campaign Overview</span>
+                <span class="vis-dash-period">Last 30 days</span>
+              </div>
+              <div class="vis-dash-stats">
+                <div class="vis-dash-stat">
+                  <span class="vis-ds-num">£12,840</span>
+                  <span class="vis-ds-label">Revenue</span>
+                  <span class="vis-ds-change up">↑ 34%</span>
+                </div>
+                <div class="vis-dash-stat">
+                  <span class="vis-ds-num">847</span>
+                  <span class="vis-ds-label">Leads</span>
+                  <span class="vis-ds-change up">↑ 21%</span>
+                </div>
+                <div class="vis-dash-stat">
+                  <span class="vis-ds-num">2.4×</span>
+                  <span class="vis-ds-label">ROAS</span>
+                  <span class="vis-ds-change up">↑ 8%</span>
+                </div>
+              </div>
+              <div class="vis-chart-bars">
+                <div class="vis-cb" style="--h:40%"><span class="vis-cb-label">W1</span></div>
+                <div class="vis-cb" style="--h:58%"><span class="vis-cb-label">W2</span></div>
+                <div class="vis-cb" style="--h:74%"><span class="vis-cb-label">W3</span></div>
+                <div class="vis-cb" style="--h:92%"><span class="vis-cb-label">W4</span></div>
+              </div>
+            </div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">Google Ads ✓</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.65s">Meta Ads ✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05: Animation & Visual Storytelling -->
+      <div class="svc-slide">
+        <div class="svc-visual svc-visual--left">
+          <div class="vis-ae-wrap">
+            <div class="vis-ae-panel glass-dark">
+              <div class="vis-ae-header">
+                <div class="vis-ae-dot" style="background:#ff5f56"></div>
+                <div class="vis-ae-dot" style="background:#ffbd2e"></div>
+                <div class="vis-ae-dot" style="background:#27c93f"></div>
+                <span class="vis-ae-title">Brand_Animation.aep — After Effects</span>
+              </div>
+              <div class="vis-ae-canvas">
+                <div class="vis-ae-shape vis-aes-1"></div>
+                <div class="vis-ae-shape vis-aes-2"></div>
+                <div class="vis-ae-shape vis-aes-3"></div>
+              </div>
+              <div class="vis-ae-timeline">
+                <div class="vis-ae-track">
+                  <span class="vis-ae-layer-name">Logo Reveal</span>
+                  <div class="vis-ae-track-bar" style="--start:0%;--width:60%"></div>
+                </div>
+                <div class="vis-ae-track">
+                  <span class="vis-ae-layer-name">Text Anim</span>
+                  <div class="vis-ae-track-bar" style="--start:20%;--width:72%"></div>
+                </div>
+                <div class="vis-ae-track">
+                  <span class="vis-ae-layer-name">BG Particles</span>
+                  <div class="vis-ae-track-bar" style="--start:5%;--width:92%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">After Effects</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.7s">Motion ✓</div>
+          </div>
+        </div>
+        <div class="svc-info svc-info--right glass-dark">
+          <span class="svc-num">05</span>
+          <h3>Animation & Visual Storytelling</h3>
+          <p>Motion graphics, animated content, and creative visual sequences crafted in After Effects. Ideal for brand awareness, product launches, and premium ad creatives.</p>
+          <div class="svc-tags">
+            <span class="stag">After Effects</span><span class="stag">Motion</span><span class="stag">Branding</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06: Creative Campaigns & Strategy -->
+      <div class="svc-slide">
+        <div class="svc-info svc-info--left glass-light">
+          <span class="svc-num">06</span>
+          <h3>Creative Campaigns & Strategy</h3>
+          <p>End-to-end campaign ideation and execution, from concept through content production to launch. We build campaigns that create a moment, not just a post.</p>
+          <div class="svc-tags">
+            <span class="stag">Strategy</span><span class="stag">Campaigns</span><span class="stag">Launch</span>
+          </div>
+        </div>
+        <div class="svc-visual svc-visual--right">
+          <div class="vis-strategy-wrap">
+            <div class="vis-strategy-grid">
+              <div class="vis-strategy-rocket">🚀</div>
+              <div class="vis-strategy-nodes">
+                <div class="vis-sn" style="--x:14%;--y:24%">Brand</div>
+                <div class="vis-sn" style="--x:58%;--y:14%">Content</div>
+                <div class="vis-sn" style="--x:74%;--y:55%">Ads</div>
+                <div class="vis-sn" style="--x:18%;--y:64%">Social</div>
+                <div class="vis-sn" style="--x:50%;--y:70%">SEO</div>
+              </div>
+            </div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">100% Custom</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.8s">End-to-End</div>
+          </div>
+        </div>
+      </div>
+
+  </div><!-- /svc-inner -->
+</section>
+
+<!-- GROWTH PATHS -->
+<section class="growth-paths" id="growth">
+  <div class="center fade-up">
+    <div class="section-label">Growth Strategy</div>
+    <h2 class="section-title">Two Paths to Growth.<br/>One Clear Choice.</h2>
+    <p class="section-sub">Understanding which approach fits your goals is the first step to a strategy that actually works.</p>
+  </div>
+  <div class="growth-grid">
+
+    <!-- Organic -->
+    <div class="growth-card fade-up">
+      <div class="growth-illustration">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ground line -->
+          <line x1="20" y1="98" x2="100" y2="98" stroke="#0f52a8" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+          <!-- Stem -->
+          <path d="M60 98 Q58 80 60 60 Q62 40 60 25" stroke="#0f52a8" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- Left branch -->
+          <path d="M60 70 Q45 62 35 55" stroke="#257dc2" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Right branch -->
+          <path d="M60 58 Q75 48 85 42" stroke="#257dc2" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Left leaf -->
+          <ellipse cx="32" cy="53" rx="10" ry="6" fill="#0f52a8" opacity="0.6" transform="rotate(-30 32 53)"/>
+          <!-- Right leaf -->
+          <ellipse cx="87" cy="40" rx="10" ry="6" fill="#257dc2" opacity="0.7" transform="rotate(-20 87 40)"/>
+          <!-- Top bloom -->
+          <circle cx="60" cy="22" r="8" fill="none" stroke="#0f52a8" stroke-width="2"/>
+          <circle cx="60" cy="22" r="4" fill="#0f52a8" opacity="0.5"/>
+          <!-- Growth dots on curve -->
+          <circle cx="60" cy="85" r="2.5" fill="#257dc2" opacity="0.5"/>
+          <circle cx="60" cy="68" r="2.5" fill="#257dc2" opacity="0.6"/>
+          <circle cx="60" cy="50" r="2.5" fill="#0f52a8" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="growth-sub">Organic Growth</div>
+      <h3>Slow, Steady &amp; Sustainable</h3>
+      <p>Organic growth is built through consistent, high-quality content posted with purpose. It takes time, but the audience you build trusts your brand deeply, costs nothing in ad spend, and compounds over time.</p>
+      <ul class="growth-points">
+        <li><span class="gp-dot"></span>Results develop over weeks and months, not days</li>
+        <li><span class="gp-dot"></span>Builds genuine community and long-term brand loyalty</li>
+        <li><span class="gp-dot"></span>Every post is calculated, with timing, hooks, and formats chosen by data</li>
+        <li><span class="gp-dot"></span>No ad spend required, ideal for brands playing the long game</li>
+      </ul>
+    </div>
+
+    <!-- Paid -->
+    <div class="growth-card featured-growth fade-up">
+      <div class="growth-illustration">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Rocket body -->
+          <path d="M60 15 C60 15 75 30 75 60 L60 72 L45 60 C45 30 60 15 60 15Z" fill="url(#rocketGrad)" opacity="0.9"/>
+          <!-- Rocket window -->
+          <circle cx="60" cy="48" r="7" fill="white" opacity="0.3"/>
+          <circle cx="60" cy="48" r="4" fill="white" opacity="0.5"/>
+          <!-- Left fin -->
+          <path d="M45 60 L35 75 L48 68Z" fill="#0a3d80" opacity="0.7"/>
+          <!-- Right fin -->
+          <path d="M75 60 L85 75 L72 68Z" fill="#0a3d80" opacity="0.7"/>
+          <!-- Exhaust flames -->
+          <ellipse cx="60" cy="80" rx="8" ry="12" fill="url(#flameGrad)" opacity="0.7"/>
+          <ellipse cx="60" cy="84" rx="4" ry="7" fill="#fff" opacity="0.4"/>
+          <!-- Speed lines -->
+          <line x1="28" y1="40" x2="18" y2="40" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          <line x1="26" y1="52" x2="14" y2="52" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+          <line x1="30" y1="64" x2="22" y2="64" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.2"/>
+          <line x1="92" y1="40" x2="102" y2="40" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          <line x1="94" y1="52" x2="106" y2="52" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+          <line x1="90" y1="64" x2="98" y2="64" stroke="#257dc2" stroke-width="2" stroke-linecap="round" opacity="0.2"/>
+          <defs>
+            <linearGradient id="rocketGrad" x1="45" y1="15" x2="75" y2="72" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0f52a8"/>
+              <stop offset="100%" stop-color="#257dc2"/>
+            </linearGradient>
+            <linearGradient id="flameGrad" x1="60" y1="68" x2="60" y2="92" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="growth-sub">Paid Advertising</div>
+      <h3>Fast, Targeted &amp; Scalable</h3>
+      <p>Paid ads put your brand in front of the right people immediately. With a well-built campaign on Meta or Google, you can drive traffic, leads, and sales from day one and scale results as your budget grows.</p>
+      <ul class="growth-points">
+        <li><span class="gp-dot"></span>Results from the moment your campaign goes live</li>
+        <li><span class="gp-dot"></span>Precise targeting by interest, location, age, and behaviour</li>
+        <li><span class="gp-dot"></span>Fully measurable, with every pound tracked to a conversion</li>
+        <li><span class="gp-dot"></span>Scales with your budget, spend more, reach more</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- USPs -->
+<section class="usps" id="usps">
+  <div class="center fade-up">
+    <div class="section-label">Why LT Creativity</div>
+    <h2 class="section-title">The Unfair Advantage</h2>
+    <p class="section-sub">We don't just make content, we build growth engines. Here's what sets us apart.</p>
+  </div>
+  <div class="usp-grid">
+    <div class="usp-card fade-up">
+      <div class="usp-icon">🧠</div>
+      <div>
+        <h4>Algorithm-Native Thinking</h4>
+        <p>We understand what TikTok, Instagram and YouTube actually reward, and we engineer every piece of content to work with the algorithm, not against it.</p>
+      </div>
+    </div>
+    <div class="usp-card fade-up">
+      <div class="usp-icon">⚡</div>
+      <div>
+        <h4>Organic + Paid in One Place</h4>
+        <p>Most agencies do one or the other. We handle both, organic content that builds trust and paid ads that scale it. A complete growth system.</p>
+      </div>
+    </div>
+    <div class="usp-card fade-up">
+      <div class="usp-icon">⏱️</div>
+      <div>
+        <h4>Fast Turnaround, High Volume</h4>
+        <p>We operate like a content machine. 48-hour turnaround on edits, consistent delivery, and the capacity to scale output as your brand demands it.</p>
+      </div>
+    </div>
+    <div class="usp-card fade-up">
+      <div class="usp-icon">🎯</div>
+      <div>
+        <h4>Built Around Conversions</h4>
+        <p>Every hook, caption, and creative is built with a conversion goal in mind. Aesthetics are secondary. Performance is the priority.</p>
+      </div>
+    </div>
+    <div class="usp-card fade-up">
+      <div class="usp-icon">📊</div>
+      <div>
+        <h4>Data-Backed Decisions</h4>
+        <p>We track what works, kill what doesn't, and double down on performance. Regular reporting keeps you in the loop on every metric that matters.</p>
+      </div>
+    </div>
+    <div class="usp-card fade-up">
+      <div class="usp-icon">🎨</div>
+      <div>
+        <h4>Creative That Actually Converts</h4>
+        <p>We blend scroll-stopping creative with marketing psychology, so your content doesn't just get seen, it gets remembered and acted on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE WORK WITH -->
+<section id="clients">
+  <div class="center fade-up">
+    <div class="section-label">Who We Work With</div>
+    <h2 class="section-title">Brands We Help Scale</h2>
+    <p class="section-sub">From local service businesses to fast-growing personal brands. If you need attention, we know how to get it.</p>
+  </div>
+  <div class="clients-grid">
+    <div class="client-card fade-up">
+      <div class="client-icon">🏢</div>
+      <h3>Small & Medium Businesses</h3>
+      <p>Local and regional businesses ready to grow their digital presence and generate consistent inbound leads.</p>
+    </div>
+    <div class="client-card fade-up">
+      <div class="client-icon">👤</div>
+      <h3>Personal Brands</h3>
+      <p>Coaches, creators, consultants and influencers who need scroll-stopping content and a strategy to grow their audience.</p>
+    </div>
+    <div class="client-card fade-up">
+      <div class="client-icon">🎟️</div>
+      <h3>Events & Ticket Pages</h3>
+      <p>Event promoters and ticketed experiences who need fast-moving creative to drive awareness and sell out.</p>
+    </div>
+    <div class="client-card fade-up">
+      <div class="client-icon">🔧</div>
+      <h3>Service-Based Businesses</h3>
+      <p>Tradespeople, finance professionals, and local services who want a steady stream of quality leads from digital advertising.</p>
+    </div>
+    <div class="client-card fade-up">
+      <div class="client-icon">🛍️</div>
+      <h3>eCommerce Brands</h3>
+      <p>Product brands that need high-converting ad creatives and organic content to drive traffic and boost sales.</p>
+    </div>
+    <div class="client-card fade-up">
+      <div class="client-icon">🚀</div>
+      <h3>Startups & New Launches</h3>
+      <p>New brands that need to make a big first impression, fast. We build launch content that creates genuine buzz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="results">
+  <div class="center fade-up" style="position:relative;z-index:1;">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">Numbers That Speak</h2>
+    <p class="section-sub">Real results from real campaigns. Every number is a story of attention turned into action.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card fade-up">
+      <div style="display:flex;align-items:baseline;justify-content:center;"><div class="num counter" data-target="500">0</div><div style="font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:700;background:linear-gradient(135deg,#4a9fd4,#7dd3fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">K+</div></div>
+      <div class="label">Total Views Generated</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num counter" data-target="6">0</div><div class="num-suffix"></div>
+      <div class="label">Clients Served</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num">3.2×</div>
+      <div class="label">Average ROAS on Ad Campaigns</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div style="display:flex;align-items:baseline;justify-content:center;"><div class="num counter" data-target="180">0</div><div class="num-suffix">K+</div></div>
+      <div class="label">Ad Spend Managed (£)</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num counter" data-target="48">0</div><div class="num-suffix">h</div>
+      <div class="label">Average Edit Turnaround</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num counter" data-target="98">0</div><div class="num-suffix">%</div>
+      <div class="label">Client Satisfaction Rate</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num counter" data-target="250">0</div><div class="num-suffix">+</div>
+      <div class="label">Pieces of Content Produced</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="num counter" data-target="40">0</div><div class="num-suffix">%</div>
+      <div class="label">Avg. Engagement Rate Increase</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="center fade-up">
+    <div class="section-label">Testimonials</div>
+    <h2 class="section-title">What Clients Say</h2>
+    <p class="section-sub">Don't take our word for it, hear from the brands we've helped grow.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p>"I wasn't sure what to expect when I first started working with Luca, but honestly he's been a brilliant find. He brings in leads for my cryotherapy treatments consistently every month, and for a small clinic like mine, that extra business adds up to hundreds of pounds I simply wouldn't have had otherwise. What I really appreciate is that he just gets on with it, no fuss. And whenever I've needed anything extra done on the side he's always my first call. Couldn't recommend him enough."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">AK</div>
+        <div>
+          <h4>Alison King</h4>
+          <span>AlisonKingCryotherapy</span>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p>"I've been working with Luca for over a year now and the results speak for themselves, he's generated tens of thousands of pounds worth of business through our Instagram alone. It's not just the content either, he handles the replies and customer side of things too which has made a huge difference to how we come across online. It feels like having someone in-house who actually cares about the page performing. Best decision I made for the business."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#06b6d4,#7c3aed);">LO</div>
+        <div>
+          <h4>Louie</h4>
+          <span>Resell.Tickets</span>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p>"Luca designed the billboards we've been running around the local area and they've been a massive part of how we generate leads now. The quality of the work is top tier, they look professional, they stop people, and more importantly they convert. Some of those leads are worth hundreds to thousands each so the ROI basically justifies itself. A year on and I'm still seeing the benefit. If you're serious about growing, he's the guy."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#ec4899,#f59e0b);">AN</div>
+        <div>
+          <h4>Angelo</h4>
+          <span>Crayon Money</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="center fade-up">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Ready to Grow?</h2>
+    <p class="section-sub">Tell us about your brand and goals. We'll get back to you within 24 hours with a tailored plan.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <h3>Let's Build Something.</h3>
+      <p>Whether you're starting from zero or looking to scale what's already working, we'll find the fastest route to real results for your brand.</p>
+      <div class="contact-item"><span class="contact-item-icon">✉️</span> hello@ltcreativity.co.uk</div>
+      <div class="contact-item"><span class="contact-item-icon">📞</span> Available via enquiry form</div>
+      <div class="contact-item"><span class="contact-item-icon">⏱️</span> Response within 24 hours</div>
+      <div class="contact-socials">
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">🎵</a>
+        <a href="#" class="social-btn">▶️</a>
+        <a href="#" class="social-btn">💼</a>
+      </div>
+    </div>
+    <div class="fade-up">
+      <form id="contactForm" action="https://formspree.io/f/xvzvbqvq" method="POST">
+        <input type="hidden" name="_next" value="https://ltcreativity.co.uk/#contact" />
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Email Address" required />
+        </div>
+        <input type="text" name="business" placeholder="Business / Brand Name" />
+        <select name="service">
+          <option value="" disabled selected>Service You're Interested In</option>
+          <option>Short-Form Video Editing</option>
+          <option>Content Creation</option>
+          <option>Social Media Management</option>
+          <option>Paid Advertising (Google/Meta)</option>
+          <option>Animation & Motion Graphics</option>
+          <option>Full Creative Campaign</option>
+          <option>Other</option>
+        </select>
+        <textarea name="message" placeholder="Tell us about your brand and what you're looking to achieve..."></textarea>
+        <button type="submit" class="submit-btn">Send Enquiry →</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="icon">🚀</div>
+        <h3>Enquiry Sent!</h3>
+        <p>Thanks for reaching out. We'll be in touch within 24 hours with a tailored plan for your brand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo"><img src="./LT_Logo_v2.png" alt="LT Creativity" /></div>
+  <p>Content & Media Production · Short-Form Video · Social Media Growth · Paid Advertising</p>
+  <p style="margin-top:1rem;">© 2024 LT Creativity. All rights reserved.</p>
+</footer>
+
+<script>
+  // ── HERO CANVAS ANIMATION ──
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    const PARTICLE_COUNT = 90;
+    const CONNECTION_DIST = 150;
+    const MOUSE_RADIUS = 130;
+    let particles = [];
+    let mouse = { x: null, y: null };
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    const COLORS = ['#0f52a8','#1a6bc7','#257dc2','#3a8fd4','#5aaee0','#7dc8f0'];
+
+    class Particle {
+      constructor() { this.init(); }
+      init() {
+        this.x  = Math.random() * canvas.width;
+        this.y  = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.r  = Math.random() * 2.2 + 0.8;
+        this.baseOpacity = Math.random() * 0.5 + 0.25;
+        this.phase = Math.random() * Math.PI * 2;
+        this.speed = Math.random() * 0.015 + 0.008;
+        this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      }
+      update(ts) {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (mouse.x !== null) {
+          const dx = this.x - mouse.x, dy = this.y - mouse.y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < MOUSE_RADIUS) {
+            const f = (MOUSE_RADIUS - d) / MOUSE_RADIUS * 1.8;
+            this.x += (dx / d) * f;
+            this.y += (dy / d) * f;
+          }
+        }
+        if (this.x < -20) this.x = canvas.width + 20;
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.y < -20) this.y = canvas.height + 20;
+        if (this.y > canvas.height + 20) this.y = -20;
+        this.opacity = this.baseOpacity + Math.sin(ts * this.speed + this.phase) * 0.18;
+      }
+      draw(ts) {
+        const pulse = Math.sin(ts * this.speed + this.phase);
+        const r = this.r + pulse * 0.5;
+        // Glow halo
+        if (this.r > 1.8) {
+          const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 5);
+          g.addColorStop(0, this.color + '30');
+          g.addColorStop(1, 'transparent');
+          ctx.beginPath(); ctx.arc(this.x, this.y, r * 5, 0, Math.PI * 2);
+          ctx.fillStyle = g; ctx.globalAlpha = 0.6; ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = Math.max(0.1, this.opacity);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function init() {
+      particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+    }
+
+    function animate(ts) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw connecting lines first
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < CONNECTION_DIST) {
+            const alpha = (1 - d / CONNECTION_DIST) * 0.22;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = '#3a8fd4';
+            ctx.lineWidth = 0.7;
+            ctx.globalAlpha = alpha;
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      // Draw & update particles on top
+      particles.forEach(p => { p.update(ts); p.draw(ts); });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => { resize(); init(); });
+    canvas.addEventListener('mousemove', e => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+    resize(); init(); requestAnimationFrame(animate);
+  })();
+
+  // Sticky nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.getAttribute('data-target'));
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = Math.floor(current);
+    }, 16);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  // ── SERVICES REVEAL ON SCROLL ──
+  (function() {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll('.svc-slide').forEach(el => revealObserver.observe(el));
+  })();
+
+</script>
+</body>
+</html>
