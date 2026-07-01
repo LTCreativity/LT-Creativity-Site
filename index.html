@@ -492,6 +492,32 @@
     footer .logo { margin-bottom: 1rem; display: flex; justify-content: center; }
     footer .logo img { height: 60px; width: auto; object-fit: contain; }
     footer p { color: var(--muted); font-size: 0.85rem; }
+    footer .legal-links { margin-top: 1rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    footer .legal-links a { color: var(--muted); font-size: 0.85rem; text-decoration: underline; cursor: pointer; background: none; border: none; font-family: inherit; }
+    footer .legal-links a:hover { color: var(--purple); }
+
+    /* ── LEGAL MODAL ── */
+    .legal-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 3000;
+      background: rgba(10,10,20,0.55); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 5%;
+    }
+    .legal-modal-overlay.active { display: flex; }
+    .legal-modal {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto;
+      padding: 2.5rem; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+    .legal-modal h2 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .legal-modal .legal-updated { color: var(--muted); font-size: 0.8rem; margin-bottom: 1.5rem; }
+    .legal-modal h3 { font-size: 1rem; margin: 1.3rem 0 0.4rem; }
+    .legal-modal p, .legal-modal li { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+    .legal-modal ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+    .legal-modal-close {
+      position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none;
+      font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1;
+    }
+    .legal-modal-close:hover { color: var(--purple); }
 
     /* ── ANIMATIONS ── */
     .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -552,9 +578,9 @@
       <a href="#services" class="btn-outline">View Services</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">500K+</div><div class="label">Views Generated</div></div>
-      <div class="hero-stat"><div class="num">7</div><div class="label">Clients Served</div></div>
-      <div class="hero-stat"><div class="num">3.2×</div><div class="label">Avg. ROAS</div></div>
+      <div class="hero-stat"><div class="num">1M+</div><div class="label">Views Generated</div></div>
+      <div class="hero-stat"><div class="num">6</div><div class="label">Clients Served</div></div>
+      <div class="hero-stat"><div class="num">2.7×</div><div class="label">Avg. ROAS</div></div>
       <div class="hero-stat"><div class="num">48h</div><div class="label">Turnaround Time</div></div>
     </div>
   </div>
@@ -661,7 +687,7 @@
         <div class="svc-info svc-info--left glass-light">
           <span class="svc-num">02</span>
           <h3>Content Creation</h3>
-          <p>Full-service filming and editing for brands that want high-quality, original content. From concept to final cut, we handle it all with a creative-first approach.</p>
+          <p>Filming and editing service for brands that want high-quality, original content. From concept to final cut, we handle it all with a creative-first approach.</p>
           <div class="svc-tags">
             <span class="stag">Filming</span><span class="stag">Editing</span><span class="stag">Concept</span>
           </div>
@@ -1086,7 +1112,7 @@
       <div class="label">Clients Served</div>
     </div>
     <div class="stat-card fade-up">
-      <div class="num">3.2×</div>
+      <div class="num">2.7×</div>
       <div class="label">Average ROAS on Ad Campaigns</div>
     </div>
     <div class="stat-card fade-up">
@@ -1167,8 +1193,8 @@
     <div class="contact-info fade-up">
       <h3>Let's Build Something.</h3>
       <p>Whether you're starting from zero or looking to scale what's already working, we'll find the fastest route to real results for your brand.</p>
-      <div class="contact-item"><span class="contact-item-icon">✉️</span> hello@ltcreativity.co.uk</div>
-      <div class="contact-item"><span class="contact-item-icon">📞</span> Available via enquiry form</div>
+      <div class="contact-item"><span class="contact-item-icon">✉️</span> info@ltcreativity.co.uk</div>
+      <div class="contact-item"><span class="contact-item-icon">📞</span> 07799 508061</div>
       <div class="contact-item"><span class="contact-item-icon">⏱️</span> Response within 24 hours</div>
       <div class="contact-socials">
         <a href="#" class="social-btn">📸</a>
@@ -1212,7 +1238,59 @@
   <div class="logo"><img src="./LT_Logo_v2.png" alt="LT Creativity" /></div>
   <p>Content & Media Production · Short-Form Video · Social Media Growth · Paid Advertising</p>
   <p style="margin-top:1rem;">© 2024 LT Creativity. All rights reserved.</p>
+  <div class="legal-links">
+    <a onclick="openLegalModal('privacy-modal')">Privacy Policy</a>
+    <a onclick="openLegalModal('cookie-modal')">Cookie Policy</a>
+  </div>
 </footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="legal-modal-overlay" id="privacy-modal" onclick="if(event.target===this) closeLegalModal('privacy-modal')">
+  <div class="legal-modal">
+    <button class="legal-modal-close" onclick="closeLegalModal('privacy-modal')" aria-label="Close">✕</button>
+    <h2>Privacy Policy</h2>
+    <div class="legal-updated">Last updated: 1 July 2026</div>
+    <p>LT Creativity ("we", "us", "our") operates ltcreativity.co.uk. This policy explains what personal data we collect and how we use it.</p>
+
+    <h3>1. Data we collect</h3>
+    <ul>
+      <li>Name, email address, and any details you submit via our contact/enquiry form.</li>
+      <li>Basic technical data (browser type, pages visited) via cookies — see our Cookie Policy.</li>
+    </ul>
+
+    <h3>2. How we use it</h3>
+    <ul>
+      <li>To respond to enquiries and provide quotes.</li>
+      <li>To improve our website and services.</li>
+    </ul>
+
+    <h3>3. Sharing</h3>
+    <p>We do not sell your data. We may use third-party tools (e.g. Google Fonts, form processors) that process limited data on our behalf.</p>
+
+    <h3>4. Your rights (UK GDPR)</h3>
+    <p>You can access, correct, or request deletion of your data by emailing info@ltcreativity.co.uk.</p>
+
+    <h3>5. Contact</h3>
+    <p>info@ltcreativity.co.uk · 07799 508061</p>
+  </div>
+</div>
+
+<!-- COOKIE POLICY MODAL -->
+<div class="legal-modal-overlay" id="cookie-modal" onclick="if(event.target===this) closeLegalModal('cookie-modal')">
+  <div class="legal-modal">
+    <button class="legal-modal-close" onclick="closeLegalModal('cookie-modal')" aria-label="Close">✕</button>
+    <h2>Cookie Policy</h2>
+    <div class="legal-updated">Last updated: 1 July 2026</div>
+    <p>This site uses cookies to:</p>
+    <ul>
+      <li>Remember your preferences.</li>
+      <li>Understand site usage (analytics, if enabled).</li>
+      <li>Load fonts from Google Fonts.</li>
+    </ul>
+    <p>You can disable cookies at any time in your browser settings. Disabling cookies may affect some site functionality.</p>
+    <p>Questions? Contact us at info@ltcreativity.co.uk.</p>
+  </div>
+</div>
 
 <script>
   // ── HERO CANVAS ANIMATION ──
@@ -1387,6 +1465,20 @@
     document.querySelectorAll('.svc-slide').forEach(el => revealObserver.observe(el));
   })();
 
+  // ── LEGAL MODALS ──
+  function openLegalModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLegalModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.legal-modal-overlay.active').forEach(el => closeLegalModal(el.id));
+    }
+  });
 </script>
 </body>
 </html>
