@@ -328,6 +328,44 @@
     .vis-sn:nth-child(1){animation:nodeFloat 3.2s 0s ease-in-out infinite} .vis-sn:nth-child(2){animation:nodeFloat 3.2s 0.5s ease-in-out infinite} .vis-sn:nth-child(3){animation:nodeFloat 3.2s 1s ease-in-out infinite} .vis-sn:nth-child(4){animation:nodeFloat 3.2s 1.5s ease-in-out infinite} .vis-sn:nth-child(5){animation:nodeFloat 3.2s 2s ease-in-out infinite}
     @keyframes nodeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
 
+    /* ─── 7. Website Design & Development ─── */
+    .vis-web-wrap { position: relative; width: 420px; max-width: 100%; perspective: 1400px; }
+    .vis-web-monitor {
+      --mx: 0deg; --my: 0deg; --sy: 0deg;
+      border-radius: 14px; overflow: hidden; position: relative;
+      background: linear-gradient(145deg,#111c3a,#060e1d);
+      border: 1px solid rgba(37,125,194,0.4);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px rgba(0,0,0,0.75), 0 0 60px rgba(15,82,168,0.28);
+      transform: perspective(1400px) rotateY(calc(-14deg + var(--mx))) rotateX(calc(4deg + var(--my) + var(--sy)));
+      transition: transform 0.2s ease-out;
+      transform-style: preserve-3d;
+    }
+    .vis-web-screen { background: #080d1a; position: relative; overflow: hidden; }
+    .vis-web-topbar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vis-web-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex-shrink: 0; }
+    .vis-web-url { margin-left: 8px; background: rgba(255,255,255,0.06); border-radius: 50px; padding: 3px 12px; font-size: 0.6rem; color: rgba(255,255,255,0.4); font-family: monospace; }
+    .vis-web-body { padding: 18px 20px 22px; position: relative; }
+    .vis-web-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .vis-web-logo { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg,#0f52a8,#4a9fd4); box-shadow: 0 0 14px rgba(37,125,194,0.6); }
+    .vis-web-navlinks { display: flex; gap: 10px; }
+    .vis-web-navlinks span { width: 24px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.16); }
+    .vis-web-hero-line { height: 9px; border-radius: 4px; background: linear-gradient(90deg,rgba(74,159,212,0.75),rgba(125,211,252,0.35)); margin-bottom: 8px; }
+    .vis-web-hero-line--lg { width: 78%; height: 13px; }
+    .vis-web-hero-line--sm { width: 52%; background: rgba(255,255,255,0.14); }
+    .vis-web-hero-btn { width: 76px; height: 20px; border-radius: 50px; background: linear-gradient(135deg,#0f52a8,#257dc2); margin-top: 12px; box-shadow: 0 6px 18px rgba(15,82,168,0.5); }
+    .vis-web-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 20px; }
+    .vis-web-card { height: 44px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(37,125,194,0.22); }
+    .vis-web-screen::after {
+      content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%;
+      background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+      animation: webSheen 5s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes webSheen { 0%,15%{transform:translateX(-30%)} 55%,100%{transform:translateX(260%)} }
+    .vis-web-cursor { position: absolute; width: 12px; height: 12px; border: 2px solid #7dd3fc; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); right: 26%; bottom: 22%; box-shadow: 0 0 10px rgba(125,211,252,0.85); animation: webCursor 4s ease-in-out infinite; }
+    @keyframes webCursor { 0%,100%{opacity:0; transform:rotate(-45deg) translate(0,0)} 8%,45%{opacity:1} 50%{transform:rotate(-45deg) translate(-70px,-46px)} 92%{opacity:0} }
+    .vis-web-stand { width: 90px; height: 14px; margin: 0 auto; background: linear-gradient(180deg,#1a2a4a,#0a1428); border-radius: 0 0 8px 8px; box-shadow: 0 12px 24px rgba(0,0,0,0.5); }
+    .vis-web-stand::before { content: ''; display: block; width: 46px; height: 8px; margin: 0 auto; background: rgba(37,125,194,0.35); border-radius: 3px; transform: translateY(-2px); }
+
     /* ─── Responsive ─── */
     @media (max-width: 900px) {
       .svc-slide { flex-direction: column; padding: 3.5rem 0; gap: 2.5rem; }
@@ -904,6 +942,50 @@
             </div>
             <div class="vis-float-tag vis-ft-1" style="--delay:0s">100% Custom</div>
             <div class="vis-float-tag vis-ft-2" style="--delay:0.8s">End-to-End</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07: Website Design & Development -->
+      <div class="svc-slide">
+        <div class="svc-info svc-info--left glass-light">
+          <span class="svc-num">07</span>
+          <h3>Website Design & Development</h3>
+          <p>We design and build fast, modern websites that look as good as they perform, from landing pages to full brand sites, coded to load quickly and convert visitors into customers.</p>
+          <div class="svc-tags">
+            <span class="stag">Design</span><span class="stag">Development</span><span class="stag">Responsive</span>
+          </div>
+        </div>
+        <div class="svc-visual svc-visual--right">
+          <div class="vis-web-wrap" id="visWebWrap">
+            <div class="vis-web-monitor" id="visWebMonitor">
+              <div class="vis-web-screen">
+                <div class="vis-web-topbar">
+                  <span class="vis-web-dot" style="--c:#ff5f57"></span>
+                  <span class="vis-web-dot" style="--c:#febc2e"></span>
+                  <span class="vis-web-dot" style="--c:#28c840"></span>
+                  <div class="vis-web-url">ltcreativity.co.uk</div>
+                </div>
+                <div class="vis-web-body">
+                  <div class="vis-web-nav">
+                    <div class="vis-web-logo"></div>
+                    <div class="vis-web-navlinks"><span></span><span></span><span></span></div>
+                  </div>
+                  <div class="vis-web-hero-line vis-web-hero-line--lg"></div>
+                  <div class="vis-web-hero-line vis-web-hero-line--sm"></div>
+                  <div class="vis-web-hero-btn"></div>
+                  <div class="vis-web-grid">
+                    <div class="vis-web-card"></div>
+                    <div class="vis-web-card"></div>
+                    <div class="vis-web-card"></div>
+                  </div>
+                </div>
+                <div class="vis-web-cursor"></div>
+              </div>
+            </div>
+            <div class="vis-web-stand"></div>
+            <div class="vis-float-tag vis-ft-1" style="--delay:0s">Pixel Perfect</div>
+            <div class="vis-float-tag vis-ft-2" style="--delay:0.6s">Fully Responsive</div>
           </div>
         </div>
       </div>
@@ -1486,6 +1568,42 @@
       document.querySelectorAll('.legal-modal-overlay.active').forEach(el => closeLegalModal(el.id));
     }
   });
+
+  // ── INTERACTIVE WEBSITE MOCKUP TILT (mouse + scroll) ──
+  (function() {
+    const wrap = document.getElementById('visWebWrap');
+    const monitor = document.getElementById('visWebMonitor');
+    if (!wrap || !monitor) return;
+
+    wrap.addEventListener('mousemove', (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      monitor.style.setProperty('--mx', (px * 16) + 'deg');
+      monitor.style.setProperty('--my', (py * -10) + 'deg');
+    });
+    wrap.addEventListener('mouseleave', () => {
+      monitor.style.setProperty('--mx', '0deg');
+      monitor.style.setProperty('--my', '0deg');
+    });
+
+    let ticking = false;
+    function updateScrollTilt() {
+      const rect = wrap.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const viewportCenter = window.innerHeight / 2;
+      const ratio = Math.max(-1, Math.min(1, (center - viewportCenter) / viewportCenter));
+      monitor.style.setProperty('--sy', (ratio * -8) + 'deg');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollTilt);
+        ticking = true;
+      }
+    }, { passive: true });
+    updateScrollTilt();
+  })();
 </script>
 </body>
 </html>
